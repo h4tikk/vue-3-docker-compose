@@ -78,6 +78,7 @@ export default {
         }
       }
       this.spawnStart()
+      this.$store.commit("game/SET_SCORE", 0)
     },
 
     spawnStart() {
