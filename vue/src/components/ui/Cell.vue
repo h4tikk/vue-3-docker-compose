@@ -18,16 +18,13 @@ export default {
     x: Number,
     y: Number
   },
-  emits: ['drag-start', 'drop-cell'],
+  emits: ['drag-start', 'drop'],
   methods: {
     onDrop(){
-      this.$emit('drop-cell',{x: this.x, y: this.y})
+      this.$emit('drop',{x: this.x, y: this.y})
     },
     onDragStart(){
       this.$emit('drag-start',{x: this.x, y: this.y})
-    },
-    onTouchEnd() {
-      this.$emit('drop-cell', { x: this.x, y: this.y })
     }
   }
 }

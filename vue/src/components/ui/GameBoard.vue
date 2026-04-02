@@ -10,7 +10,7 @@
           :x="x"
           :y="y"
 
-          @drop-cell="onDrop"
+          @drop="onDrop"
           @drag-start="onDragStart"
           />
       </div>
@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import Cell from "@/components/ui/Cell.vue" //меня вебшторм так заставляет...
+import Cell from "@/components/ui/Cell.vue"
 export default {
   name: "GameBoard",
   components: {Cell},
@@ -102,16 +102,18 @@ export default {
         this.grid[positionFrom.y][positionFrom.x] = null
         moved = true
       }
-      else if(source === dest) {
-        this.grid[positionTo.y][positionTo.x] = source
-        moved = true
-      }
       else if(dest.level === source.level && dest.level < 4) {
         this.addScore(dest.level)
         dest.level += 1
         this.grid[positionFrom.y][positionFrom.x] = null
         moved = true
       }
+      else
+      {
+        this.grid[positionTo.y][positionTo.x] = source
+        moved = true
+      }
+
       this.dragged = null
 
       if(moved) {
