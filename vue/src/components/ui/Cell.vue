@@ -3,7 +3,7 @@
     class="cell"
     @dragover.prevent
     @drop="onDrop"
-    @touchstart.stop="$emit('drag-start', { x, y })"
+
   >
     <Item v-if="item" :item="item" @drag-start="onDragStart"/>
   </div>
@@ -21,10 +21,10 @@ export default {
   emits: ['drag-start', 'drop'],
   methods: {
     onDrop(){
-      this.$emit('drop',{x: this.x, y: this.y})
+      this.$emit('drop',{x: this.x, y: this.y});
     },
     onDragStart(){
-      this.$emit('drag-start',{x: this.x, y: this.y})
+      this.$emit('drag-start',{x: this.x, y: this.y});
     }
   }
 }

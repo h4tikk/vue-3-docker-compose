@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from 'vue-router'
 
-import IndexPage from './../components/pages/IndexPage.vue'
-import GamePage from './../components/pages/GamePage.vue'
+import IndexPage from '@/components/pages/IndexPage.vue'
+import GamePage from '@/components/pages/GamePage.vue'
 
 export const ROUTES = {
   GAME: 'GAME',

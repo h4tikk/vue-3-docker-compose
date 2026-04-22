@@ -15,19 +15,14 @@ export default {
   },
   computed: {
     image() {
-      return `/icons/image-${this.item.level}.png`
+      return `../icons/image-${this.item.level}.png`;//находятся в папке public вне src
     }
   },
   emits: ["drag-start"],
-  data() {
-    return {
-      isTouching: false,
-      touchStartPos: null
-    }
-  },
+
   methods: {
     onDragStart() {
-      this.$emit("drag-start")
+      this.$emit("drag-start");
     }
   }
 }
