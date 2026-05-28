@@ -2,10 +2,15 @@
   <div
     class="cell"
     @dragover.prevent
-    @drop="onDrop"
+    @drop="() => onDrop()"
 
   >
-    <Item v-if="item" :item="item" @drag-start="onDragStart" @item-click="onItemClick" @item-right-click="onItemRightClick"/>
+    <Item v-if="item"
+          :item="item"
+          @drag-start="() => onDragStart()"
+          @item-click="() => onItemClick()"
+          @item-right-click="() => onItemRightClick()"
+    />
   </div>
 </template>
 <script>
@@ -37,6 +42,9 @@ export default {
 </script>
 <style scoped lang="scss">
 .cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 64px;
   height: 64px;
   background: #1e293b;

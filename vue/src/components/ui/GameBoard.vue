@@ -9,15 +9,31 @@
           :item="cell"
           :x="x"
           :y="y"
-          @drop="onDrop"
-          @drag-start="onDragStart"
-          @cell-click="onCellClick"
-          @cell-right-click="onCellRightClick"
+          @drop="(positionTo) => onDrop(positionTo)"
+          @drag-start="(position) => onDragStart(position)"
+          @cell-click="(item) => onCellClick(item)"
+          @cell-right-click="(position) => onCellRightClick(position)"
           />
       </div>
     </div>
-    <button class="game-board--btn" @click="spawn">Добавить</button>
-    <button class="game-board--btn" @click="restart">Перезапустить</button>
+    <button
+      class="game-board--btn btn-expand"
+      @click="() => expandGrid()"
+      :disabled="!expandInfo.canExpand"
+    >
+      Расширить поле ({{expandInfo.cost}} очков)
+      <div v-if="!expandInfo.canExpand" class="btn-expand--hint">
+        Требуется баланс: {{expandInfo.condition}}
+      </div>
+    </button>
+    <button class="game-board--btn" @click="() => spawn()">Добавить</button>
+    <button class="game-board--btn" @click="() => restart()">Перезапустить</button>
+
+    <div class="game-board--hints">
+      <i>ЛКМ по 4 уровню — спавн нового предмета за 5 очков <br>
+        ПКМ по клетке — продать
+      </i>
+    </div>
   </div>
 </template>
 <script>
@@ -35,14 +51,15 @@ export default {
     ...mapGetters('game', {
       grid: 'getGrid',
       score: 'getScore',
-      size: 'getSize'
+      size: 'getSize',
+      expandInfo: 'getExpandInfo'
     })
   },
   mounted() {
     this.initGame();
   },
   methods: {
-    ...mapActions('game', ['initGame', 'restart', 'spawn', 'handleDrop','spawnFromMax','sellItem']),
+    ...mapActions('game', ['initGame', 'restart', 'spawn', 'handleDrop','spawnFromMax','sellItem', 'expandGrid']),
     onDragStart(position) {
       this.dragged = position;
     },
@@ -79,20 +96,50 @@ export default {
     background: #0f172a;
     padding: 12px;
     border-radius: 12px;
+    width: fit-content;
+    margin: 0 auto;
   }
 
   &--row {
     display: flex;
     gap: 10px;
+    justify-content: center;
   }
 
   &--btn {
     padding: 8px;
     border-radius: 6px;
-    background: #22c55e;
+    background: limegreen;
     color: white;
     border: none;
     cursor: pointer;
+  }
+  .btn-expand {
+    background: dodgerblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &--hint {
+      font-size: 11px;
+      color: snow;
+      margin-top: 4px;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  .btn-restart {
+    background: red;
+  }
+
+  &--hints {
+    font-size: 14px;
+    margin-top: 10px;
+    color: white;
+    line-height: 1.4;
   }
 }
 </style>
